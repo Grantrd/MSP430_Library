@@ -16,7 +16,7 @@ void printer(float var)
     }
 }
 
-int adc(bool p,int res, float volts, char vb)
+int adc(char p,int res, float volts, char vb)
 {
     volatile int resolution;
     volatile float AD;
@@ -70,7 +70,7 @@ int adc(bool p,int res, float volts, char vb)
     ADC12CTL3 |= ADC12CSTARTADD_5;      /* select memory buffer, currently choose 5*/
     ADC12MCTL5 |= ADC12INCH_4; // Memory control register - Currently control memory 5 -> Channel: A
     ADC12CTL0 |= ADC12ENC;              // Enable conversion
-    if(p)
+    if(p == 'p')
     {
         volatile int i;
         for(;;)
@@ -105,10 +105,9 @@ int adc(bool p,int res, float volts, char vb)
     return AD;
 }
 
-
 void main(void)
     {
         WDTCTL = WDTPW | WDTHOLD;                //Stop watchdog timer
         PM5CTL0 &= ~LOCKLPM5;                   //Disable the GPIO power-on default high-impedance mode
-        adc(true, 12, 1.2, 'b');                      //adc(print, resolution, internal voltage reference, )
+        adc('p', 12, 3.3, 'v');                      //adc(print, resolution, internal voltage reference, )
     }
