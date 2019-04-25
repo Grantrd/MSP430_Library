@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 
+
 void printer(float var)
 {
     volatile float vint;
@@ -16,12 +17,12 @@ void printer(float var)
     }
 }
 
-int adc(char p,int res, float volts, char vb)
+float adc(char p,int res, float volts, char vb)
 {
     volatile int resolution;
-    volatile unsigned int ADCvar;
+    //volatile unsigned int ADCvar;
     volatile float AD;
-    volatile unsigned bool extref;
+    volatile bool extref;
     extref = false;
     P1SEL0 &= ~BIT4;
     P1SEL1 |= BIT4;
@@ -31,28 +32,28 @@ int adc(char p,int res, float volts, char vb)
     {
         REFCTL0 |= REFVSEL_0;     /* Configure internal 1.2V reference. */
         ADC12MCTL5 |= ADC12VRSEL_1;
-        printer(volt);
+        //printer(volt);
     }
     else if(volt == 20)
     {
         REFCTL0  |= REFVSEL_1;      /* Configure internal 2.0V reference. */
         ADC12MCTL5 |= ADC12VRSEL_1;
-        printer(volt);
+       // printer(volt);
     }
     else if(volt == 25)
     {
         REFCTL0  |= REFVSEL_2;      /* Configure internal 2.5V reference. */
         ADC12MCTL5 |= ADC12VRSEL_1;
-        printer(volt);
+       // printer(volt);
     }
     else if(volt == 33)
     {
         ADC12MCTL5 |= ADC12VRSEL_0;  // Configure internal 3.3V reference. */
-        printer(volt);
+        //printer(volt);
     }
     else
     {
-        ADC12MCTL0 = ADC12VRSEL_4 | ADC12INCH_4;
+        //ADC12MCTL0 = ADC12VRSEL_4 | ADC12INCH_4; // configure external reference voltage
         extref = true;
     }
 
@@ -77,8 +78,18 @@ int adc(char p,int res, float volts, char vb)
 
     __delay_cycles(100);                    // delay to allow Ref to settle
     ADC12CTL0 |= ADC12SHT0_0 | ADC12ON; /* Turn on ADC12, 4 ADC12CLK cycles for sampling */
-    ADC12CTL3 |= ADC12CSTARTADD_5;      /* select memory buffer, currently choose 5*/
-    ADC12MCTL5 |= ADC12INCH_4; // Memory control register - Currently control memory 5 -> Channel: A
+    if (extref)
+    {
+        ADC12CTL1 = ADC12SHP;
+        ADC12MCTL0 = ADC12VRSEL_4 | ADC12INCH_4;   // Vr+ = VeREF+ (ext) and Vr-=VeREF-
+
+    }
+    else
+    {
+        ADC12CTL3 |= ADC12CSTARTADD_5;      /* select memory buffer, currently choose 5*/
+        ADC12MCTL5 |= ADC12INCH_4; // Memory control register - Currently control memory 5 -> Channel: A
+    }
+
     ADC12CTL0 |= ADC12ENC;              // Enable conversion
     if(p == 'p')
     {
@@ -90,7 +101,7 @@ int adc(char p,int res, float volts, char vb)
             __delay_cycles(100);                      // delay to allow Ref to settle
             if(extref)
             {
-                ADCvar = ADC12MEM0;     //external ref conversion
+                AD = ADC12MEM0;     //external ref conversion
             }
             else
             {
@@ -114,7 +125,7 @@ int adc(char p,int res, float volts, char vb)
         __delay_cycles(100);                    // delay to allow Ref to settle
         if(extref)
         {
-          ADCvar = ADC12MEM0;     //external ref conversion
+          AD = ADC12MEM0;     //external ref conversion
         }
         else
         {
@@ -130,10 +141,9 @@ int adc(char p,int res, float volts, char vb)
 }
 
 
-
 void main(void)
     {
         WDTCTL = WDTPW | WDTHOLD;                //Stop watchdog timer
         PM5CTL0 &= ~LOCKLPM5;                   //Disable the GPIO power-on default high-impedance mode
-        adc('p', 12, 0.8, 'v');                      //adc(print, resolution, internal voltage reference, )
+        printer(adc('p', 12, 3.5, 'v'));                      //adc(print, resolution, internal voltage reference, )
     }
