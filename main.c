@@ -19,10 +19,14 @@ void printer(float var)
 int adc(char p,int res, float volts, char vb)
 {
     volatile int resolution;
+    volatile unsigned int ADCvar;
     volatile float AD;
+    volatile unsigned bool extref;
+    extref = false;
     P1SEL0 &= ~BIT4;
     P1SEL1 |= BIT4;
     int volt = (int)(volts * 10);
+
     if(volt == 12)
     {
         REFCTL0 |= REFVSEL_0;     /* Configure internal 1.2V reference. */
@@ -41,11 +45,17 @@ int adc(char p,int res, float volts, char vb)
         ADC12MCTL5 |= ADC12VRSEL_1;
         printer(volt);
     }
-    else
+    else if(volt == 33)
     {
         ADC12MCTL5 |= ADC12VRSEL_0;  // Configure internal 3.3V reference. */
         printer(volt);
     }
+    else
+    {
+        ADC12MCTL0 = ADC12VRSEL_4 | ADC12INCH_4;
+        extref = true;
+    }
+
     REFCTL0  |= REFON;
 
     if(res == 8)
@@ -78,7 +88,14 @@ int adc(char p,int res, float volts, char vb)
             ADC12CTL0 &= ~ADC12SC;                      // clear the start bit
             ADC12CTL0 |= ADC12SC;                      // Sampling and conversion start
             __delay_cycles(100);                      // delay to allow Ref to settle
-            AD = ADC12MEM5;                          // Read in results if conversion
+            if(extref)
+            {
+                ADCvar = ADC12MEM0;     //external ref conversion
+            }
+            else
+            {
+                AD = ADC12MEM5;   // Read in results if conversion
+            }
             __delay_cycles(100);                    // delay to allow Ref to settle
             if(vb == 'v')
             {
@@ -95,7 +112,14 @@ int adc(char p,int res, float volts, char vb)
         ADC12CTL0 &= ~ADC12SC;  // clear the start bit
         ADC12CTL0 |= ADC12SC;       // Sampling and conversion start
         __delay_cycles(100);                    // delay to allow Ref to settle
-        AD = ADC12MEM5;      // Read in results if conversion
+        if(extref)
+        {
+          ADCvar = ADC12MEM0;     //external ref conversion
+        }
+        else
+        {
+          AD = ADC12MEM5;   // Read in results if conversion
+        }
         __delay_cycles(100);                    // delay to allow Ref to settle
         if(vb == 'v')
         {
@@ -105,9 +129,11 @@ int adc(char p,int res, float volts, char vb)
     return AD;
 }
 
+
+
 void main(void)
     {
         WDTCTL = WDTPW | WDTHOLD;                //Stop watchdog timer
         PM5CTL0 &= ~LOCKLPM5;                   //Disable the GPIO power-on default high-impedance mode
-        adc('p', 12, 3.3, 'v');                      //adc(print, resolution, internal voltage reference, )
+        adc('p', 12, 0.8, 'v');                      //adc(print, resolution, internal voltage reference, )
     }
