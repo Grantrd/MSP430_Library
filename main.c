@@ -355,6 +355,9 @@ int ADC_Bits(int res, float volts)
     __delay_cycles(100);                    // delay to allow Ref to settle
     return AD;
 }
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
 void Custom_Read_ADC_Volts(int res, float volts, float min)
 {
     float minVolts = min;
