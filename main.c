@@ -19,13 +19,58 @@ void printer(float var)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
-void Read_ADC_Bits(int res, float volts)
+void Read_ADC_Bits(float pinNum, int res, float volts)
 {
     volatile int i;
     volatile float AD;
     volatile bool extref;
-    P1SEL0 &= ~BIT4;
-    P1SEL1 |= BIT4;
+    int pin = (int)(pinNum*10);
+    if(pin == 12)
+    {
+        P1SEL0 &= ~BIT2;
+        P1SEL1 |= BIT2;
+    }
+    else if(pin == 13)
+    {
+        P1SEL0 &= ~BIT3;
+        P1SEL1 |= BIT3;
+    }
+    else if(pin == 30)
+    {
+        P3SEL0 &= ~BIT0;
+        P3SEL1 |= BIT0;
+    }
+    else if(pin == 31)
+    {
+        P3SEL0 &= ~BIT1;
+        P3SEL1 |= BIT1;
+    }
+    else if(pin == 32)
+    {
+        P3SEL0 &= ~BIT2;
+        P3SEL1 |= BIT2;
+    }
+    else if(pin == 33)
+    {
+        P3SEL0 &= ~BIT3;
+        P3SEL1 |= BIT3;
+    }
+    else if(pin == 14)
+    {
+        P1SEL0 &= ~BIT4;
+        P1SEL1 |= BIT4;
+    }
+    else if(pin == 15)
+    {
+        P1SEL0 &= ~BIT5;
+        P1SEL1 |= BIT5;
+    }
+    else
+    {
+        P1SEL0 &= ~BIT4;
+        P1SEL1 |= BIT4;
+        printf("%s", "That is not a valid analog pin, swapped to default pin 1.4");
+    }
     extref = false;
     int volt = (int)(volts * 10);
     if(volt == 12)
@@ -106,14 +151,59 @@ void Read_ADC_Bits(int res, float volts)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
-void Read_ADC_Volts(int res, float volts)
+void Read_ADC_Volts(float pinNum, int res, float volts)
 {
     volatile int resolution;
     volatile int i;
     volatile float AD;
     volatile bool extref;
-    P1SEL0 &= ~BIT4;
-    P1SEL1 |= BIT4;
+    int pin = (int)(pinNum*10);
+    if(pin == 12)
+    {
+        P1SEL0 &= ~BIT2;
+        P1SEL1 |= BIT2;
+    }
+    else if(pin == 13)
+    {
+        P1SEL0 &= ~BIT3;
+        P1SEL1 |= BIT3;
+    }
+    else if(pin == 30)
+    {
+        P3SEL0 &= ~BIT0;
+        P3SEL1 |= BIT0;
+    }
+    else if(pin == 31)
+    {
+        P3SEL0 &= ~BIT1;
+        P3SEL1 |= BIT1;
+    }
+    else if(pin == 32)
+    {
+        P3SEL0 &= ~BIT2;
+        P3SEL1 |= BIT2;
+    }
+    else if(pin == 33)
+    {
+        P3SEL0 &= ~BIT3;
+        P3SEL1 |= BIT3;
+    }
+    else if(pin == 14)
+    {
+        P1SEL0 &= ~BIT4;
+        P1SEL1 |= BIT4;
+    }
+    else if(pin == 15)
+    {
+        P1SEL0 &= ~BIT5;
+        P1SEL1 |= BIT5;
+    }
+    else
+    {
+        P1SEL0 &= ~BIT4;
+        P1SEL1 |= BIT4;
+        printf("%s", "That is not a valid analog pin, swapped to default pin 1.4");
+    }
     extref = false;
     int volt = (int)(volts * 10);
     if(volt == 12)
@@ -196,13 +286,58 @@ void Read_ADC_Volts(int res, float volts)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
-float ADC_Volts(int res, float volts)
+float ADC_Volts(float pinNum, int res, float volts)
 {
     volatile int resolution;
     volatile float AD;
     volatile bool extref;
-    P1SEL0 &= ~BIT4;
-    P1SEL1 |= BIT4;
+    int pin = (int)(pinNum*10);
+    if(pin == 12)
+    {
+        P1SEL0 &= ~BIT2;
+        P1SEL1 |= BIT2;
+    }
+    else if(pin == 13)
+    {
+        P1SEL0 &= ~BIT3;
+        P1SEL1 |= BIT3;
+    }
+    else if(pin == 30)
+    {
+        P3SEL0 &= ~BIT0;
+        P3SEL1 |= BIT0;
+    }
+    else if(pin == 31)
+    {
+        P3SEL0 &= ~BIT1;
+        P3SEL1 |= BIT1;
+    }
+    else if(pin == 32)
+    {
+        P3SEL0 &= ~BIT2;
+        P3SEL1 |= BIT2;
+    }
+    else if(pin == 33)
+    {
+        P3SEL0 &= ~BIT3;
+        P3SEL1 |= BIT3;
+    }
+    else if(pin == 14)
+    {
+        P1SEL0 &= ~BIT4;
+        P1SEL1 |= BIT4;
+    }
+    else if(pin == 15)
+    {
+        P1SEL0 &= ~BIT5;
+        P1SEL1 |= BIT5;
+    }
+    else
+    {
+        P1SEL0 &= ~BIT4;
+        P1SEL1 |= BIT4;
+        printf("%s", "That is not a valid analog pin, swapped to default pin 1.4");
+    }
     extref = false;
     int volt = (int)(volts * 10);
     if(volt == 12)
@@ -280,12 +415,57 @@ float ADC_Volts(int res, float volts)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
-int ADC_Bits(int res, float volts)
+int ADC_Bits(float pinNum, int res, float volts)
 {
     volatile int AD;
     volatile bool extref;
-    P1SEL0 &= ~BIT4;
-    P1SEL1 |= BIT4;
+    int pin = (int)(pinNum*10);
+    if(pin == 12)
+    {
+        P1SEL0 &= ~BIT2;
+        P1SEL1 |= BIT2;
+    }
+    else if(pin == 13)
+    {
+        P1SEL0 &= ~BIT3;
+        P1SEL1 |= BIT3;
+    }
+    else if(pin == 30)
+    {
+        P3SEL0 &= ~BIT0;
+        P3SEL1 |= BIT0;
+    }
+    else if(pin == 31)
+    {
+        P3SEL0 &= ~BIT1;
+        P3SEL1 |= BIT1;
+    }
+    else if(pin == 32)
+    {
+        P3SEL0 &= ~BIT2;
+        P3SEL1 |= BIT2;
+    }
+    else if(pin == 33)
+    {
+        P3SEL0 &= ~BIT3;
+        P3SEL1 |= BIT3;
+    }
+    else if(pin == 14)
+    {
+        P1SEL0 &= ~BIT4;
+        P1SEL1 |= BIT4;
+    }
+    else if(pin == 15)
+    {
+        P1SEL0 &= ~BIT5;
+        P1SEL1 |= BIT5;
+    }
+    else
+    {
+        P1SEL0 &= ~BIT4;
+        P1SEL1 |= BIT4;
+        printf("%s", "That is not a valid analog pin, swapped to default pin 1.4");
+    }
     extref = false;
     int volt = (int)(volts * 10);
     if(volt == 12)
@@ -358,15 +538,60 @@ int ADC_Bits(int res, float volts)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
-void Custom_Read_ADC_Volts(int res, float volts, float min)
+void Custom_Read_ADC_Volts(float pinNum, int res, float volts, float min)
 {
     float minVolts = min;
     volatile int resolution;
     volatile int i;
     volatile float AD;
     volatile bool extref;
-    P1SEL0 &= ~BIT4;
-    P1SEL1 |= BIT4;
+    int pin = (int)(pinNum*10);
+    if(pin == 12)
+    {
+        P1SEL0 &= ~BIT2;
+        P1SEL1 |= BIT2;
+    }
+    else if(pin == 13)
+    {
+        P1SEL0 &= ~BIT3;
+        P1SEL1 |= BIT3;
+    }
+    else if(pin == 30)
+    {
+        P3SEL0 &= ~BIT0;
+        P3SEL1 |= BIT0;
+    }
+    else if(pin == 31)
+    {
+        P3SEL0 &= ~BIT1;
+        P3SEL1 |= BIT1;
+    }
+    else if(pin == 32)
+    {
+        P3SEL0 &= ~BIT2;
+        P3SEL1 |= BIT2;
+    }
+    else if(pin == 33)
+    {
+        P3SEL0 &= ~BIT3;
+        P3SEL1 |= BIT3;
+    }
+    else if(pin == 14)
+    {
+        P1SEL0 &= ~BIT4;
+        P1SEL1 |= BIT4;
+    }
+    else if(pin == 15)
+    {
+        P1SEL0 &= ~BIT5;
+        P1SEL1 |= BIT5;
+    }
+    else
+    {
+        P1SEL0 &= ~BIT4;
+        P1SEL1 |= BIT4;
+        printf("%s", "That is not a valid analog pin, swapped to default pin 1.4");
+    }
     extref = false;
     int volt = (int)(volts * 10);
     if(volt == 12)
@@ -448,14 +673,59 @@ void Custom_Read_ADC_Volts(int res, float volts, float min)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
-void Custom_Read_ADC_Bits(int res, float volts)
+void Custom_Read_ADC_Bits(float pinNum, int res, float volts)
 {
     volatile int resolution;
     volatile int i;
     volatile float AD;
     volatile bool extref;
-    P1SEL0 &= ~BIT4;
-    P1SEL1 |= BIT4;
+    int pin = (int)(pinNum*10);
+    if(pin == 12)
+    {
+        P1SEL0 &= ~BIT2;
+        P1SEL1 |= BIT2;
+    }
+    else if(pin == 13)
+    {
+        P1SEL0 &= ~BIT3;
+        P1SEL1 |= BIT3;
+    }
+    else if(pin == 30)
+    {
+        P3SEL0 &= ~BIT0;
+        P3SEL1 |= BIT0;
+    }
+    else if(pin == 31)
+    {
+        P3SEL0 &= ~BIT1;
+        P3SEL1 |= BIT1;
+    }
+    else if(pin == 32)
+    {
+        P3SEL0 &= ~BIT2;
+        P3SEL1 |= BIT2;
+    }
+    else if(pin == 33)
+    {
+        P3SEL0 &= ~BIT3;
+        P3SEL1 |= BIT3;
+    }
+    else if(pin == 14)
+    {
+        P1SEL0 &= ~BIT4;
+        P1SEL1 |= BIT4;
+    }
+    else if(pin == 15)
+    {
+        P1SEL0 &= ~BIT5;
+        P1SEL1 |= BIT5;
+    }
+    else
+    {
+        P1SEL0 &= ~BIT4;
+        P1SEL1 |= BIT4;
+        printf("%s", "That is not a valid analog pin, swapped to default pin 1.4");
+    }
     extref = false;
     int volt = (int)(volts * 10);
     if(volt == 12)
@@ -536,13 +806,58 @@ void Custom_Read_ADC_Bits(int res, float volts)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
-int Custom_ADC_Bits(int res, float volts)
+int Custom_ADC_Bits(float pinNum, int res, float volts)
 {
     volatile int resolution;
     volatile float AD;
     volatile bool extref;
-    P1SEL0 &= ~BIT4;
-    P1SEL1 |= BIT4;
+    int pin = (int)(pinNum*10);
+    if(pin == 12)
+    {
+        P1SEL0 &= ~BIT2;
+        P1SEL1 |= BIT2;
+    }
+    else if(pin == 13)
+    {
+        P1SEL0 &= ~BIT3;
+        P1SEL1 |= BIT3;
+    }
+    else if(pin == 30)
+    {
+        P3SEL0 &= ~BIT0;
+        P3SEL1 |= BIT0;
+    }
+    else if(pin == 31)
+    {
+        P3SEL0 &= ~BIT1;
+        P3SEL1 |= BIT1;
+    }
+    else if(pin == 32)
+    {
+        P3SEL0 &= ~BIT2;
+        P3SEL1 |= BIT2;
+    }
+    else if(pin == 33)
+    {
+        P3SEL0 &= ~BIT3;
+        P3SEL1 |= BIT3;
+    }
+    else if(pin == 14)
+    {
+        P1SEL0 &= ~BIT4;
+        P1SEL1 |= BIT4;
+    }
+    else if(pin == 15)
+    {
+        P1SEL0 &= ~BIT5;
+        P1SEL1 |= BIT5;
+    }
+    else
+    {
+        P1SEL0 &= ~BIT4;
+        P1SEL1 |= BIT4;
+        printf("%s", "That is not a valid analog pin, swapped to default pin 1.4");
+    };
     extref = false;
     int volt = (int)(volts * 10);
     if(volt == 12)
@@ -617,14 +932,59 @@ int Custom_ADC_Bits(int res, float volts)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
-float Custom_ADC_Volts(int res, float volts, float min)
+float Custom_ADC_Volts(float pinNum, int res, float volts, float min)
 {
     float minVolts = min;
     volatile int resolution;
     volatile float AD;
     volatile bool extref;
-    P1SEL0 &= ~BIT4;
-    P1SEL1 |= BIT4;
+    int pin = (int)(pinNum*10);
+    if(pin == 12)
+    {
+        P1SEL0 &= ~BIT2;
+        P1SEL1 |= BIT2;
+    }
+    else if(pin == 13)
+    {
+        P1SEL0 &= ~BIT3;
+        P1SEL1 |= BIT3;
+    }
+    else if(pin == 30)
+    {
+        P3SEL0 &= ~BIT0;
+        P3SEL1 |= BIT0;
+    }
+    else if(pin == 31)
+    {
+        P3SEL0 &= ~BIT1;
+        P3SEL1 |= BIT1;
+    }
+    else if(pin == 32)
+    {
+        P3SEL0 &= ~BIT2;
+        P3SEL1 |= BIT2;
+    }
+    else if(pin == 33)
+    {
+        P3SEL0 &= ~BIT3;
+        P3SEL1 |= BIT3;
+    }
+    else if(pin == 14)
+    {
+        P1SEL0 &= ~BIT4;
+        P1SEL1 |= BIT4;
+    }
+    else if(pin == 15)
+    {
+        P1SEL0 &= ~BIT5;
+        P1SEL1 |= BIT5;
+    }
+    else
+    {
+        P1SEL0 &= ~BIT4;
+        P1SEL1 |= BIT4;
+        printf("%s", "That is not a valid analog pin, swapped to default pin 1.4");
+    }
     extref = false;
     int volt = (int)(volts * 10);
     if(volt == 12)
@@ -702,14 +1062,14 @@ float Custom_ADC_Volts(int res, float volts, float min)
 
 void main(void)
      {
-        WDTCTL = WDTPW | WDTHOLD;                           //Stop watchdog timer
-        PM5CTL0 &= ~LOCKLPM5;                              //Disable the GPIO power-on default high-impedance mode
-        //Read_ADC_Bits(12, 0.8);                         //prints ADC value in bits(resolution, voltage)
-        //Read_ADC_Volts(12, 0.8);                       //prints ADC value in volts(resolution, voltage)
-        //printer(ADC_Bits(12, 0.8));                   //returns ADC value in bits()
-        //printer(ADC_Volts(12, 0.8));                 //returns ADC value in volts()
-        //Custom_Read_ADC_Volts(12, 1.4, 0.8);        //prints ADC value in volts with custom min voltage(resolution, voltage)
-        //Custom_Read_ADC_Bits(12, 1.4);             //prints ADC value in volts with custom min voltage(resolution, voltage)
-        //printer(Custom_ADC_Bits(12, 1.4));        //prints ADC value in volts with custom min voltage(resolution, voltage)
-        printer(Custom_ADC_Volts(12, 1.4, 0.8));   //prints ADC value in volts with custom min voltage(resolution, voltage)
+        WDTCTL = WDTPW | WDTHOLD;                                //Stop watchdog timer
+        PM5CTL0 &= ~LOCKLPM5;                                   //Disable the GPIO power-on default high-impedance mode
+        //Read_ADC_Bits(1.4, 12, 2.0);                         //prints ADC value in bits(pinNum, resolution, voltage)
+        //Read_ADC_Volts(1.4, 12, 0.8);                       //prints ADC value in volts(pinNum, resolution, voltage)
+        //printer(ADC_Bits(1.4, 12, 0.8));                   //returns ADC value in bits()
+        //printer(ADC_Volts(1.4, 12, 0.8));                 //returns ADC value in volts()
+          Custom_Read_ADC_Volts(1.4, 12, 1.4, 0.8);        //prints ADC value in volts with custom min voltage(pinNum, resolution, voltage)
+        //Custom_Read_ADC_Bits(1.4, 12, 1.4);             //prints ADC value in volts with custom min voltage(pinNum, resolution, voltage)
+        //printer(Custom_ADC_Bits(1.4, 12, 1.4));        //prints ADC value in volts with custom min voltage(pinNum, resolution, voltage)
+        //printer(Custom_ADC_Volts(1.4, 12, 1.4, 0.8)); //prints ADC value in volts with custom min voltage(pinNum, resolution, voltage)
     }
